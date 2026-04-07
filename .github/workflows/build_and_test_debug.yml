@@ -43,8 +43,16 @@ jobs:
           node-version: 18
           cache: npm
 
+      - name: Install Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.21'
+          cache: false
+
       - name: Install NPM Dependencies
         run: npm ci
+        env:
+          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
 
       - name: Lint
         run: ./task lint
@@ -95,8 +103,16 @@ jobs:
           node-version: 18
           cache: npm
 
+      - name: Install Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.21'
+          cache: false
+
       - name: Install NPM Dependencies
-        run: PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true npm ci
+        run: npm ci
+        env:
+          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
 
       - name: Shadowbox Debug Build (arm64)
         run: TARGET_ARCH=aarch64 ./task shadowbox:build
